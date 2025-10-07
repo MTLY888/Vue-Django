@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Phone List</title>
+        <link rel="stylesheet" href="{% static 'bootstrap-3.0.0/dist/css/bootstrap.main.css' %}">
+    </head>
+    <body>
+        <h1>Phone List</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Phone</th>
+                    <th>归属地</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in phone_list %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.phone }}</td>
+                        <td>{{ row.city }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'bootstrap-3.0.0/dist/js/bootstrap.main.js' %}"></script>
+    </body>
+</html>

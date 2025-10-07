@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.0.0/dist/css/bootstrap.min.css' %}">
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-default" style="border-radius: 0;">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">靓号管理系统</a>
+          </div>
+      
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="#">用户管理</a></li>
+              <li><a href="#">号码管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown" style="position: relative;">
+                <a href="#" class="dropdown-toggle" role="button" style="cursor: pointer;">
+                  {{request.userInfo.name}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">个人资料</a></li>
+                  <li><a href="#">修改密码</a></li>
+                  <li><a href="#">注销账号</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="/logout/">退出登录</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    <script src="{% static 'JS/jQuery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.0.0/dist/js/bootstrap.min.js' %}"></script>
+    <style>
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu li a {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .dropdown-menu li a:hover {
+            color: #262626;
+            text-decoration: none;
+            background-color: #f5f5f5;
+        }
+        .dropdown-menu .divider {
+            height: 1px;
+            margin: 9px 0;
+            overflow: hidden;
+            background-color: #e5e5e5;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            console.log('jQuery loaded:', typeof $ !== 'undefined');
+            console.log('Dropdown elements found:', $('.dropdown-toggle').length);
+            
+            // 简单的下拉菜单实现
+            $('.dropdown-toggle').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Dropdown clicked');
+                
+                var $dropdown = $(this).next('.dropdown-menu');
+                console.log('Dropdown menu found:', $dropdown.length);
+                var isVisible = $dropdown.hasClass('show');
+                console.log('Is visible:', isVisible);
+                
+                // 关闭所有其他下拉菜单
+                $('.dropdown-menu').removeClass('show');
+                
+                // 切换当前下拉菜单
+                if (!isVisible) {
+                    $dropdown.addClass('show');
+                    console.log('Dropdown shown');
+                } else {
+                    console.log('Dropdown hidden');
+                }
+            });
+            
+            // 点击页面其他地方时关闭所有下拉菜单
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
+                    console.log('Dropdown closed by outside click');
+                }
+            });
+        });
+    </script>
+    {%block js %}{% endblock %}
+  </body>
+</html>

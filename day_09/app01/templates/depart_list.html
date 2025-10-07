@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>部门列表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .department-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .department-count {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .empty-state p {
+            margin: 0;
+            font-size: 16px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .table-header h3 {
+            margin: 0;
+            color: #495057;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .add-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+        }
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        .empty-state .add-btn {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .action-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 2px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+            color: white;
+            text-decoration: none;
+        }
+        .edit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>部门管理</h1>
+        </div>
+        
+        <div class="content">
+            {% if queryset %}
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">{{ queryset|length }}</div>
+                        <div class="stat-label">部门总数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{ total_count }}</div>
+                        <div class="stat-label">总人数</div>
+                    </div>
+                </div>
+                
+                <div class="table-header">
+                    <h3>部门列表</h3>
+                    <a href="/add/depart/" class="add-btn">+ 添加部门</a>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>部门名称</th>
+                                <th>人数</th>
+                                <th>操作</th>
+                                <th>编辑</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in queryset %}
+                            <tr>
+                                <td>{{ dept.id }}</td>
+                                <td class="department-name">{{ dept.title }}</td>
+                                <td>
+                                    <span class="department-count">{{ dept.count }} 人</span>
+                                </td>
+                                <td>
+                                    <a href="/delete/depart/?did={{ dept.id }}" class="action-btn delete-btn" onclick="return confirm('确定要删除这个部门吗？')">删除</a>
+                                </td>
+                                <td>
+                                    <a href="/edit/depart/?did={{ dept.id }}" class="action-btn edit-btn">编辑</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>暂无部门数据</h3>
+                    <p>系统中还没有添加任何部门信息</p>
+                    <a href="/add/depart/" class="add-btn">+ 添加部门</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

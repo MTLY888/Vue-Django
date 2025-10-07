@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 这里只放元数据，如标题、编码等 -->
+    <title>页面标题</title>
+</head>
+<body>
+    <h1>{{ message }}</h1>  <!-- 移动到 <body> 中 -->
+    <ul>
+        {% for user in data_list %}
+            <li>{{ user }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
