@@ -123,6 +123,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "web" / "static",
 ]
 
+# Session configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 使用数据库存储session
+SESSION_COOKIE_AGE = 86400  # session过期时间：24小时（秒）
+SESSION_COOKIE_NAME = 'sessionid'  # session cookie名称
+SESSION_COOKIE_SECURE = False  # 开发环境设为False，生产环境应设为True
+SESSION_COOKIE_HTTPONLY = True  # 防止XSS攻击
+SESSION_SAVE_EVERY_REQUEST = True  # 每次请求都保存session
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 浏览器关闭时不删除session
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
