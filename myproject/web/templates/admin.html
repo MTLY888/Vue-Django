@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+<div style="margin: 10px 0;">
+    <a class="btn btn-success" href="/admin/add/">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> 新建用户
+    </a>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -27,8 +32,8 @@
                                         <td>{{ row.get_gender_display }}</td>
                                         <td>{{ row.depart.title }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-primary">编辑</a>
-                                            <a href="#" class="btn btn-sm btn-danger" onclick="return confirm('确定要删除这个用户吗？')">删除</a>
+                                            <a class="btn btn-sm btn-primary" href="/admin/edit/{{ row.id }}/">编辑</a>
+                                            <a href="#" class="btn btn-sm btn-danger" onclick="deleteAction({{ row.id }})">删除</a>
                                         </td>
                                     </tr>
                                 {% empty %}
@@ -44,4 +49,29 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+    function deleteAction(id){
+        if(confirm("确定要删除这个用户吗？")){
+            // 相当于 /admin/delete/?aid=123
+                $.ajax({
+                    url:"/admin/delete/",
+                    type:"GET",
+                    data:{
+                        aid:id
+                    },
+                    dataType:"json",
+                    success:function(res){
+                        if (res.status){
+                            //删除成功刷新页面
+                            location.reload();
+                        }else{
+                            alert(res.error);
+                        }
+                    }
+                })
+            }
+        }
+    </script>
 {% endblock %}

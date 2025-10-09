@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>新建用户</strong></div>
+                    <div class="panel-body">
+                        <form method="post" novalidate class="form-horizontal">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group{% if field.errors %} has-error{% endif %}">
+                                    <label class="col-sm-3 control-label">{{ field.label }}</label>
+                                    <div class="col-sm-9">
+                                        {{ field }}
+                                        {% if field.help_text %}
+                                            <span class="help-block">{{ field.help_text }}</span>
+                                        {% endif %}
+                                        {% if field.errors %}
+                                            <span class="help-block">{{ field.errors.0 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-ok"></span> 提交
+                                    </button>
+                                    <a href="/admin/list/" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-arrow-left"></span> 返回
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

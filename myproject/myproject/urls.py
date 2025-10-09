@@ -27,4 +27,9 @@ urlpatterns = [
     path("logout/",account.logout),
     path("delete_account/",account.delete_account),
     path("admin/list/",admin.admin_list),
+    path("admin/add/",admin.admin_add),
+    # 地址需要为 /admin/edit/123/ 这样我们才能传递aid参数
+    path("admin/edit/<int:aid>/",admin.admin_edit),
+    # 地址需要为 /admin/delete/?aid=123 这样我们才能传递aid参数
+    path("admin/delete/",admin.admin_delete),
 ]

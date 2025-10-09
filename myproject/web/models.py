@@ -3,6 +3,8 @@ from django.db import models
 class Department(models.Model):
     """部门表"""
     title = models.CharField(max_length=32, verbose_name="部门名称")
+    def __str__(self):
+        return self.title
 class Admin(models.Model):
     """管理员表"""
     username = models.CharField(max_length=32,verbose_name="用户名")
